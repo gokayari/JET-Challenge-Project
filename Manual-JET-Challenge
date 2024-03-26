@@ -1,0 +1,156 @@
+
+@PriorityHigh @SmokeTest
+Feature: Filter by Cuisine Type
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can filter restaurants by cuisine type
+    Given the user is on the homepage of the food delivery website
+    When the user selects a cuisine type from the filter options
+    Then the list of restaurants should be filtered based on the selected cuisine type
+
+  Scenario: Ensure that selecting a cuisine type displays only restaurants offering that cuisine
+    Given the user is on the homepage of the food delivery website
+    When the user selects a cuisine type like Italian, Chinese, Mexican, Indian, or Burgers
+    Then only restaurants offering the selected cuisine type should be displayed
+
+  Scenario: Check if multiple cuisine types can be selected simultaneously and if the results are accurate
+    Given the user is on the homepage of the food delivery website
+    When the user selects multiple cuisine types simultaneously
+    Then only restaurants offering all selected cuisine types should be displayed
+
+
+Feature: Using "sort by"
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can sort restaurants by estimated delivery time
+    Given the user is on the homepage of the food delivery website
+    When the user selects "Estimated delivery time" from the sort by options
+    Then the restaurants should be displayed ascending order according to their estimated delivery time
+
+  Scenario: Verify that users can sort restaurants by delivery costs
+    Given the user is on the homepage of the food delivery website
+    When the user selects "Delivery costs" from the sort by options
+    Then the restaurants should be displayed ascending order according to their delivery costs
+
+  Scenario: Verify that users can sort restaurants by minumun order amount
+    Given the user is on the homepage of the food delivery website
+    When the user selects "Min. order amount" from the sort by options
+    Then the restaurants should be displayed ascending order according to their minimum order amounts
+
+  Scenario: Verify that users can sort restaurants by rating
+    Given the user is on the homepage of the food delivery website
+    When the user selects "Reviews" from the sort by options
+    Then the restaurants should be displayed decreasing order according to their review scores
+
+Feature: Search Functionality
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can search for specific restaurants using the search functionality (Positive)
+    Given the user is on the homepage of the food delivery website
+    When the user enters the name of a specific restaurant "<restaurantName>" in the search bar
+    | restaurantName                |
+    | Sushi Yana                    |
+    | Burger City                   |
+    | Fancy Italy Pizza & Vegan     |
+    | Thu Huong Asia                |
+    Then the search results should display the specified restaurant
+
+  Scenario: Ensure that searching for a restaurant displays relevant results matching the search query (Positive)
+    Given the user is on the homepage of the food delivery website
+    When the user searches for a restaurant using relevant keywords "<keyword>"
+    | keyword                       |
+    | Sushi                         |
+    | Burger                        |
+    | Pizza                         |
+    | Asia                          |
+    Then the search results should include restaurants matching the search query
+
+
+  Scenario: Verify that users cannot search using invalid input (Negative)
+    Given the user is on the homepage of the food delivery website
+    When the user attempts to search using invalid input, such as numbers or symbols "<invalidInput>"
+    | invalidInput                  |
+    | .....                         |
+    | 999999                        |
+    | Computer                      |
+    | äpFÄPWknfvk                   |
+    Then no search results should be displayed and a message stating that no matching search results were found should be shown.
+
+  Scenario: Ensure that searching for a non-existent restaurant does not return any results (Negative)
+    Given the user is on the homepage of the food delivery website
+    When the user searches for a restaurant that does not exist "<nonexistentRestaurant>"
+    | nonexistentRestaurant         |
+    | Amazon Cafe                   |
+    | Blaues Restaurant             |
+    | Bread Pitt                    |
+    | Burger König                  |
+    Then no search results should be displayed and a message stating that no matching search results were found should be shown.
+
+Feature: Using "Open now" and "Free delivery" features
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can only list restaurants that are open
+    Given the user is on the homepage of the food delivery website
+    When the user switches on "Open now" toogle button
+    Then only restaurants open at the current time should be displayed
+
+  Scenario: Verify that users can only list restaurants with free delivery
+    Given the user is on the homepage of the food delivery website
+    When the user switches on "Free delivery" toogle button
+    Then only restaurants with free delivery should be displayed
+
+  Scenario: Verify that users can only list restaurants that are open and with free delivery
+    Given the user is on the homepage of the food delivery website
+    When the user switches on "Open now" and "Free delivery" toogle buttons
+    Then only restaurants open at the current time with free delivery should be displayed
+
+Feature: Using "Rating" feature
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can list restaurants at any rating they wish
+    Given the user is on the homepage of the food delivery website
+    When the user determines any minimum rating by clicking on the stars
+    Then the restaurants with a rating higher than the selected rating should be listed
+
+Feature: Using "Offers" and "StampCards" features
+
+  Background: User navigates to the food delivery website and enters the address
+   Given the user navigates to the food delivery website at "https://www.lieferando.de/en"
+    When the user enters the address
+    Then the homepage of the food delivery website should be displayed
+
+  Scenario: Verify that users can only list restaurants with offers
+    Given the user is on the homepage of the food delivery website
+    When the user checks "Offers" checkbox
+    Then only restaurants with offers should be displayed with the offer icon below them
+
+  Scenario: Verify that users can only list restaurants with stamp cards
+    Given the user is on the homepage of the food delivery website
+    When the user checks "StampCards" checkbox
+    Then only restaurants with stamp cards should be displayed with the word StampCard in their photos
+
+  Scenario: Verify that users can only list restaurants with offers and stamp cards
+    Given the user is on the homepage of the food delivery website
+    When the user checks "Offers" and "StampCards" checkboxes
+    Then only restaurants with offers and stamp cards should be displayed with the offer icon below them and the word StampCard in their photos
+
